@@ -7,6 +7,7 @@ on:
       - LICENSE
       - .gitignore
       - main.pdf
+      - template.pdf
 
   pull_request:
     branches:
@@ -16,6 +17,7 @@ on:
       - LICENSE
       - .gitignore
       - main.pdf
+      - template.pdf
 
   release:
     types:
@@ -40,13 +42,13 @@ jobs:
         with:
           root_file: main.tex
           latexmk_use_xelatex: true
-          args: -file-line-error -halt-on-error -interaction=nonstopmode
+          args: -jobname=template -file-line-error -halt-on-error -interaction=nonstopmode
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v7
         with:
-          name: main-pdf
-          path: main.pdf
+          name: template-pdf
+          path: template.pdf
           if-no-files-found: error
           retention-days: 90
 
@@ -67,15 +69,15 @@ jobs:
         with:
           root_file: main.tex
           latexmk_use_xelatex: true
-          args: -file-line-error -halt-on-error -interaction=nonstopmode
+          args: -jobname=template -file-line-error -halt-on-error -interaction=nonstopmode
 
       - name: Commit PDF to main
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f main.pdf
+          git add -f template.pdf
           if git diff --cached --quiet; then
-            echo "main.pdf is unchanged"
+            echo "template.pdf is unchanged"
           else
             git commit -m ":bento: Update compiled PDF"
           fi

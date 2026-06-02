@@ -9,9 +9,10 @@ Requires a TeX distribution with `latexmk` and XeLaTeX.
 ```sh
 make
 make clean
+make cleanall
 ```
 
-`make` builds the watermark PDF if needed, then builds `main.pdf`. `make clean` removes LaTeX auxiliary files and keeps generated PDFs.
+`make` builds the watermark PDF if needed, then builds `main.pdf`. `make clean` removes LaTeX auxiliary files and keeps generated PDFs. `make cleanall` also removes generated PDFs.
 
 ## Example
 

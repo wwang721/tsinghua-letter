@@ -12,7 +12,13 @@ sub make_watermark_pdf {
     my ($base) = @_;
 
     return 1 unless $base eq 'watermark/watermark_logo';
-    return system('latexmk', '-cd', 'watermark/watermark_logo.tex');
+    return system(
+        'latexmk',
+        '-cd',
+        '-pdf',
+        q{-pdflatex=pdflatex -halt-on-error -interaction=nonstopmode -file-line-error %O %S},
+        'watermark/watermark_logo.tex'
+    );
 }
 
 $clean_ext = join(' ', qw(
