@@ -1,0 +1,86 @@
+name: LaTeX build
+
+on:
+  push:
+    paths-ignore:
+      - README.md
+      - LICENSE
+      - .gitignore
+      - main.pdf
+
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - README.md
+      - LICENSE
+      - .gitignore
+      - main.pdf
+
+  release:
+    types:
+      - published
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: github.event_name != 'release'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: main.tex
+          latexmk_use_xelatex: true
+          args: -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: main-pdf
+          path: main.pdf
+          if-no-files-found: error
+          retention-days: 90
+
+  release:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: main.tex
+          latexmk_use_xelatex: true
+          args: -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Commit PDF to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f main.pdf
+          if git diff --cached --quiet; then
+            echo "main.pdf is unchanged"
+          else
+            git commit -m ":bento: Update compiled PDF"
+          fi
+          git push origin HEAD:main
+          if [ -n "$GITHUB_REF_NAME" ]; then
+            git tag -f "$GITHUB_REF_NAME"
+            git push origin -f "$GITHUB_REF_NAME"
+          fi

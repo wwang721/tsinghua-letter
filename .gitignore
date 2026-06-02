@@ -333,4 +333,4 @@ TSWLatexianTemp*
 # custom ignore rules:
 .DS_Store
 main.pdf
-watermark_logo.pdf
+watermark/watermark_logo.pdf
