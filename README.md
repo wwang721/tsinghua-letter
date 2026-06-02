@@ -1,6 +1,6 @@
 # Tsinghua Letter Template
 
-An unofficial XeLaTeX letter template with a Tsinghua-style header, purple theme color, and a faint logo watermark on every page.
+An unofficial XeLaTeX letter template with a Tsinghua-style header, purple theme color, Chinese support, and a faint logo watermark on every page.
 
 ## Build
 
@@ -12,6 +12,10 @@ make clean
 ```
 
 `make` builds the watermark PDF if needed, then builds `main.pdf`. `make clean` removes LaTeX auxiliary files and keeps generated PDFs.
+
+## Example
+
+![Example](example.png)
 
 ## Files
 
