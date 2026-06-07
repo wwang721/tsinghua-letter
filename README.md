@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/github/license/wwang721/tsinghua-letter)](https://github.com/wwang721/tsinghua-letter/blob/main/LICENSE)
 
 
-An UNOFFICIAL **XeLaTeX** letter template with a Tsinghua letterheader, purple theme color (#671372), **Chinese support**, and a faint logo watermark on every page.
+An UNOFFICIAL **XeLaTeX** letter template with a Tsinghua letterhead, purple theme color (#671372), **Chinese support**, and a faint logo watermark on every page.
 
 ## Build
 
